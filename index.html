@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Money Calculator by Weight</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-image: url('background.jpg'); /* Add your background image path here */
+    background-size: cover;
+    background-position: center;
+  }
+  .container {
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.8); /* Added an opaque white background to the container */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #4cae4c;
+  }
+  .result {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Money Calculator by Weight</h2>
+  <div>
+    <label for="weight">Weight (in pounds):</label>
+    <input type="number" id="weight" placeholder="Enter weight">
+  </div>
+  <div>
+    <label for="denomination">Denomination:</label>
+    <select id="denomination">
+      <option value="penny">Penny</option>
+      <option value="nickel">Nickel</option>
+      <option value="dime">Dime</option>
+      <option value="quarter">Quarter</option>
+      <option value="dollar">Dollar</option>
+    </select>
+  </div>
+  <button onclick="calculateValue()">Calculate</button>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+// Define the weight (in grams) and value of each US currency denomination
+const currencyWeights = {
+    'penny': {'weight': 2.5, 'value': 0.01},
+    'nickel': {'weight': 5.0, 'value': 0.05},
+    'dime': {'weight': 2.268, 'value': 0.10},
+    'quarter': {'weight': 5.670, 'value': 0.25},
+    'dollar': {'weight': 8.1, 'value': 1.00}
+    // Add more denominations as needed
+  };
+  
+function calculateValue() {
+  // Get the weight in pounds from the input
+  const weightInPounds = document.getElementById('weight').value;
+  
+  // Convert pounds to grams (1 pound = 453.59237 grams)
+  const weightInGrams = weightInPounds * 453.59237;
+  
+  const denomination = document.getElementById('denomination').value;
+  
+  if (!currencyWeights[denomination]) {
+    document.getElementById('result').innerText = "Denomination not recognized.";
+    return;
+  }
+  
+  const numPieces = weightInGrams / currencyWeights[denomination].weight;
+  const totalValue = numPieces * currencyWeights[denomination].value;
+  
+  document.getElementById('result').innerText = `The total value is: $${totalValue.toFixed(2)}`;
+}
+</script>
+</body>
+</html>
